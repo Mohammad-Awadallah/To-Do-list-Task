@@ -1,14 +1,9 @@
-
-
-
-
-
 const listOfTasks = document.querySelector("#listOfTasks")
 
 toDoScore.textContent = listOfTasks.children.length;
 
 
-const calcDone = (doneIcon)=>{
+const toggleDone = (doneIcon)=>{
  
     if(!doneIcon.style.color){
         doneIcon.style.color = "green";
@@ -33,11 +28,7 @@ taskFormButton.addEventListener("click", (event) => {
   assignee.value = "";
 });
 
-const addTask = (newTask, newAssignee) => {
-  if(newTask === "" || newAssignee === ""){
-    alert("the inputs are empty")
-    return;
-  }
+const buildAddTaskBlock = (newTask,newAssignee)=>{
   const taskDiv = document.createElement("div");
   const taskSpan = document.createElement("span");
   taskSpan.classList.add("taskText")
@@ -60,21 +51,27 @@ const addTask = (newTask, newAssignee) => {
   listOfTasks.append(li);
   toDoScore.textContent ++
   localStorage.setItem(newTask,newAssignee)
+}
+
+
+const addTask = (newTask, newAssignee) => {
+  if(newTask === "" || newAssignee === ""){
+    alert("the inputs are empty")
+    return;
+  }
+  buildAddTaskBlock(newTask,newAssignee)
 };
 
 listOfTasks.addEventListener("click", (event) => {
   
-  event.target.classList.contains("trash") &&confirmaition(event.target.parentElement);
-  event.target.classList.contains("done") && calcDone(event.target);
+  event.target.classList.contains("trash") &&confirmDeletion(event.target.parentElement);
+  event.target.classList.contains("done") && toggleDone(event.target);
 
 });
 
 
 
-const confirmaition = (clickedTask) => {
-  if(listOfTasks.getElementsByClassName("confirmaition").length >= 1){
-    return
-  }
+const buildConfirmDeletionBlock = ()=>{
   const confirmaitionDiv = document.createElement("div");
   confirmaitionDiv.classList.add("confirmaition")
   const confirmaitionParagraph = document.createElement("p");
@@ -89,11 +86,19 @@ const confirmaition = (clickedTask) => {
   confirmaitionDiv.append(confirmaitionParagraph, buttonsDiv);
   
   listOfTasks.append(confirmaitionDiv);
+  return [deleteButton,cancelButton,confirmaitionDiv]
+}
+
+const confirmDeletion = (clickedTask) => {
+  if(listOfTasks.getElementsByClassName("confirmaition").length >= 1){
+    return
+  }
+  [deleteButton,cancelButton,confirmaitionDiv] =  buildConfirmDeletionBlock()
   deleteButton.addEventListener("click", () => {
     clickedTask.remove();
     confirmaitionDiv.remove();
     if(clickedTask.classList.contains("doneTask")){
-      calcDone(clickedTask.querySelector(".done"));
+      toggleDone(clickedTask.querySelector(".done"));
     }
     toDoScore.textContent --
     localStorage.removeItem(clickedTask.querySelector("span").textContent)
