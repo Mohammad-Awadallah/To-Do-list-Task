@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styleMain.css" />
+    <script
+      src="https://kit.fontawesome.com/2c6120aad1.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>ToDoList</title>
+  </head>
+  <body>
+    <container>
+      <form  id="taskForm">
+        <div>
+          <label for="task">Task</label>
+          <input type="text" id="task" placeholder="Task"/>
+        </div>
+        <div id="assigneeDiv">
+          <label for="assignee">Assignee</label>
+          <input type="text" id="assignee" placeholder="Assignee"/>
+          <button type="submit" id="taskFormButton">Add</button>
+        </div>
+        
+      </form>
+      <section id="middleSection">
+
+      </section>
+      <div id="line"></div>
+      <div id="searchDiv">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="searchBar" type="search" placeholder="search..."  data-search/>
+        <i class="fa-solid fa-x fa-l"></i>
+      </div>
+      <ul id="listOfTasks">
+       
+      </ul>
+      <footer id="stats">
+        <p id="toDo">ToDo: <span id="toDoScore">0</span></p>
+        <p id="done">Done: <span id="doneScore">0</span></p>
+      </footer>
+    </container>
+
+    <script src="main.js"></script>
+  </body>
+</html>
